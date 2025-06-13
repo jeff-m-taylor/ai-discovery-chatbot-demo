@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Continuant AI Discovery Chatbot Demo</title>
+    <title>Continuant AI Discovery Agent Demo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -129,7 +129,7 @@
 <body>
     <div id="sample-content">
         <h1 class="text-lg text-center mb-4">Continuant AI Discovery Agent</h1>
-        <p class="text-lg text-center">This is a sample page to demonstrate the AI Discovery Chatbot widget. The chatbot opens automatically below this text. Use the bottom-right icon to toggle it.</p>
+        <p class="text-lg text-center">This is a sample page to demonstrate the AI Discovery Agent.</p>
     </div>
 
     <div id="chat-container">
@@ -142,7 +142,7 @@
         <div id="options-container"></div>
     </div>
 
-    <div id="toggle-chat" title="Toggle Chatbot">✖</div>
+    <div id="toggle-chat" title="Toggle Agent">✖</div>
 
     <script>
         // Placeholder HubSpot Forms API configuration
@@ -306,7 +306,7 @@
 
         function startChat() {
             if (userEmail) {
-                displayMessage("Welcome to Continuant’s AI Discovery Chatbot! Let’s explore how AI can help your business. " + questions[0].text, 'bot-message');
+                displayMessage("Welcome to Continuant’s AI Discovery Agent! Let’s explore how AI can help your business. " + questions[0].text, 'bot-message');
                 displayOptions(questions[0].options);
             } else {
                 displayMessage("Please provide a valid email to continue.", 'bot-message');
