@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Continuant AI Discovery Chatbot Demo</title>
+    <title>Continuant AI Discovery Agent Demo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -128,12 +128,11 @@
 </head>
 <body>
     <div id="sample-content">
-        <h1 class="text-3xl font-bold text-center mb-4">Sample Web Page</h1>
-        <p class="text-lg text-center">This is a sample page to demonstrate the AI Discovery Chatbot widget. The chatbot opens automatically below this text. Use the bottom-right icon to toggle it.</p>
+        <h1 class="text-lg font-bold text-center mb-4">Continuant AI Agent</h1>
     </div>
 
     <div id="chat-container">
-        <div id="chat-header">Continuant AI Discovery Chatbot</div>
+        <div id="chat-header">Continuant AI Discovery Agent</div>
         <div class="admin-note">
             <p><strong>Note for HubSpot Admins:</strong> Responses are logged to the console (F12 > Console). For live integration, replace <code>YOUR_PORTAL_ID</code> and <code>YOUR_FORM_GUID</code> with HubSpot credentials and create a form with matching fields.</p>
         </div>
@@ -142,7 +141,7 @@
         <div id="options-container"></div>
     </div>
 
-    <div id="toggle-chat" title="Toggle Chatbot">✖</div>
+    <div id="toggle-chat" title="Toggle Agent">✖</div>
 
     <script>
         // Placeholder HubSpot Forms API configuration
@@ -150,50 +149,85 @@
         const HUBSPOT_FORM_GUID = 'YOUR_FORM_GUID'; // Replace with HubSpot Form GUID for live integration
 
         const questions = [
+            // Customer Service (B2B, B2C, CXAI-inspired)
             {
-                text: "What are your top business priorities for the next 12–18 months?",
-                options: ["Cost reduction", "Customer experience", "Operational efficiency", "Other (please specify)"],
-                key: "business_priorities"
+                text: "What’s your primary contact center platform?",
+                options: ["Genesys", "Cisco", "Avaya", "None", "Other (please specify)"],
+                key: "cx_platform"
             },
             {
-                text: "How does your leadership measure success for IT investments?",
-                options: ["ROI", "Customer satisfaction", "Efficiency gains", "Other (please specify)"],
-                key: "success_metrics"
+                text: "What’s the top CX challenge in your contact center?",
+                options: ["Long wait times", "Agent burnout", "Low resolution rates", "Other (please specify)"],
+                key: "cx_challenge"
             },
             {
-                text: "What’s the biggest bottleneck in your customer service or operations?",
-                options: ["Slow response times", "Manual processes", "Data silos", "Other (please specify)"],
-                key: "ai_bottleneck"
+                text: "Do you use AI for customer interactions?",
+                options: ["Yes, chatbots", "Yes, IVR", "No, exploring", "No, not interested", "Other (please specify)"],
+                key: "cx_ai_usage"
+            },
+            // IT Help Desk (Internal, CXAI-inspired)
+            {
+                text: "How often do IT tickets involve CX system issues?",
+                options: ["Rarely", "Occasionally", "Frequently", "Constantly", "Other (please specify)"],
+                key: "it_cx_ticket_frequency"
             },
             {
-                text: "How much time is lost to manual processes daily? (Estimate in hours)",
-                options: ["Less than 1 hour", "1–3 hours", "3–5 hours", "More than 5 hours", "Other (please specify)"],
-                key: "time_lost"
+                text: "What’s the top IT help desk priority for CX support?",
+                options: ["System uptime", "Fast resolution", "User training", "Other (please specify)"],
+                key: "it_cx_priority"
             },
             {
-                text: "What systems are you using for customer interactions or data analysis?",
-                options: ["Legacy systems", "Cloud-based tools", "Custom software", "Other (please specify)"],
-                key: "current_systems"
+                text: "Do you use AI for IT ticket triage?",
+                options: ["Yes, fully automated", "Yes, partially", "No, exploring", "No, not interested", "Other (please specify)"],
+                key: "it_ai_triage"
+            },
+            // Internal Processes (Internal, CXAI-inspired)
+            {
+                text: "Which CX process is most manual in your organization?",
+                options: ["Call logging", "Agent scheduling", "Quality assurance", "Other (please specify)"],
+                key: "ip_cx_manual_process"
             },
             {
-                text: "Have you explored AI tools, and what’s your experience?",
-                options: ["Not yet explored", "Tried but not satisfied", "Using successfully", "Other (please specify)"],
-                key: "ai_experience"
+                text: "How integrated are your CX systems with other tools?",
+                options: ["Fully integrated", "Partially integrated", "Not integrated", "Other (please specify)"],
+                key: "ip_cx_integration"
             },
             {
-                text: "What’s your budget range for addressing these challenges?",
-                options: ["Under $10,000", "$10,000–$50,000", "$50,000–$100,000", "Over $100,000", "Other (please specify)"],
-                key: "budget_range"
+                text: "What’s the top barrier to CX process automation?",
+                options: ["Cost", "Complexity", "Resistance to change", "Other (please specify)"],
+                key: "ip_cx_automation_barrier"
+            },
+            // Marketing & Sales (B2B, B2C, CXAI-inspired)
+            {
+                text: "Do you use AI for customer sentiment analysis?",
+                options: ["Yes, extensively", "Yes, limited", "No, exploring", "No, not interested", "Other (please specify)"],
+                key: "ms_cx_sentiment_ai"
             },
             {
-                text: "Who else is involved in evaluating AI solutions?",
-                options: ["IT team", "C-level executives", "Finance team", "Other (please specify)"],
-                key: "decision_makers"
+                text: "How do you leverage CX data for sales?",
+                options: ["Upsell opportunities", "Customer retention", "Lead scoring", "Not leveraged", "Other (please specify)"],
+                key: "ms_cx_data_usage"
             },
             {
-                text: "What would success look like for solving your key challenges?",
-                options: ["Cost savings", "Improved customer satisfaction", "Faster processes", "Other (please specify)"],
-                key: "success_outcomes"
+                text: "What’s the top CX-related marketing challenge?",
+                options: ["Personalization", "Data accuracy", "Campaign timing", "Other (please specify)"],
+                key: "ms_cx_marketing_challenge"
+            },
+            // Data Analytics (B2B, B2C, Internal, CXAI-inspired)
+            {
+                text: "How do you analyze CX data today?",
+                options: ["Real-time dashboards", "Periodic reports", "Manual analysis", "No analysis", "Other (please specify)"],
+                key: "da_cx_data_analysis"
+            },
+            {
+                text: "What’s the top CX analytics goal?",
+                options: ["Improve satisfaction", "Reduce churn", "Optimize operations", "Other (please specify)"],
+                key: "da_cx_analytics_goal"
+            },
+            {
+                text: "Do you use predictive AI for CX insights?",
+                options: ["Yes, extensively", "Yes, limited", "No, exploring", "No, not interested", "Other (please specify)"],
+                key: "da_cx_predictive_ai"
             }
         ];
 
@@ -306,7 +340,7 @@
 
         function startChat() {
             if (userEmail) {
-                displayMessage("Welcome to Continuant’s AI Discovery Chatbot! Let’s explore how AI can help your business. " + questions[0].text, 'bot-message');
+                displayMessage("Welcome to Continuant’s AI Discovery Agent! Let’s assess your AI readiness for customer experience and beyond. " + questions[0].text, 'bot-message');
                 displayOptions(questions[0].options);
             } else {
                 displayMessage("Please provide a valid email to continue.", 'bot-message');
