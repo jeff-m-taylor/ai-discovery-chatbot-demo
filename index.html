@@ -149,90 +149,149 @@
         const HUBSPOT_FORM_GUID = 'YOUR_FORM_GUID'; // Replace with HubSpot Form GUID for live integration
 
         const questions = [
-            // Customer Service (B2B, B2C, CXAI-inspired)
+            // Customer Service
             {
-                text: "What’s your primary contact center platform?",
+                text: "What’s driving your interest in CX AI software?",
+                options: ["Improve self-service", "Reduce wait times", "Enhance CSAT/NPS", "Increase agent productivity", "Other (please specify)"],
+                key: "cx_ai_interest"
+            },
+            {
+                text: "Why do customers contact your organization?",
+                options: ["Product inquiries", "Technical support", "Billing issues", "Other (please specify)"],
+                key: "contact_reasons"
+            },
+            {
+                text: "What do you want to improve about your customer experience?",
+                options: ["Faster resolutions", "Personalization", "Omnichannel support", "Other (please specify)"],
+                key: "cx_improvement_goal"
+            },
+            {
+                text: "Which metrics would you use to measure CX success?",
+                options: ["Average Handle Time (AHT)", "First Contact Resolution (FCR)", "Net Promoter Score (NPS)", "Customer Satisfaction (CSAT)", "Other (please specify)"],
+                key: "cx_success_metrics"
+            },
+            {
+                text: "What are your estimated monthly interaction volumes? (Enter each: Inbound Calls, Outbound Calls, Inbound SMS, Outbound SMS, Web Chat)",
+                options: [],
+                key: "interaction_volumes"
+            },
+            // IT Help Desk
+            {
+                text: "What’s your current contact center software?",
                 options: ["Genesys", "Cisco", "Avaya", "None", "Other (please specify)"],
-                key: "cx_platform"
+                key: "current_cc_software"
             },
             {
-                text: "What’s the top CX challenge in your contact center?",
-                options: ["Long wait times", "Agent burnout", "Low resolution rates", "Other (please specify)"],
-                key: "cx_challenge"
+                text: "Which communication channels do you support today? (Select all that apply, then type 'Done')",
+                options: ["Voice", "Chat", "Email", "Fax", "SMS", "MMS", "Social Media", "Video", "Done"],
+                key: "comm_channels",
+                multiSelect: true
             },
             {
-                text: "Do you use AI for customer interactions?",
-                options: ["Yes, chatbots", "Yes, IVR", "No, exploring", "No, not interested", "Other (please specify)"],
-                key: "cx_ai_usage"
+                text: "What’s your estimated annual agent attrition rate?",
+                options: ["Under 10%", "10–20%", "20–30%", "Over 30%", "Other (please specify)"],
+                key: "agent_attrition_rate"
             },
-            // IT Help Desk (Internal, CXAI-inspired)
+            // Internal Processes
             {
-                text: "How often do IT tickets involve CX system issues?",
-                options: ["Rarely", "Occasionally", "Frequently", "Constantly", "Other (please specify)"],
-                key: "it_cx_ticket_frequency"
-            },
-            {
-                text: "What’s the top IT help desk priority for CX support?",
-                options: ["System uptime", "Fast resolution", "User training", "Other (please specify)"],
-                key: "it_cx_priority"
+                text: "Do you have committed spend with cloud marketplaces?",
+                options: ["Amazon", "Azure", "Google", "Other", "None"],
+                key: "cloud_marketplace_spend"
             },
             {
-                text: "Do you use AI for IT ticket triage?",
-                options: ["Yes, fully automated", "Yes, partially", "No, exploring", "No, not interested", "Other (please specify)"],
-                key: "it_ai_triage"
-            },
-            // Internal Processes (Internal, CXAI-inspired)
-            {
-                text: "Which CX process is most manual in your organization?",
-                options: ["Call logging", "Agent scheduling", "Quality assurance", "Other (please specify)"],
-                key: "ip_cx_manual_process"
+                text: "How do you anticipate AI changing your operations after one year?",
+                options: ["Reduced costs", "Improved efficiency", "Enhanced customer loyalty", "Other (please specify)"],
+                key: "ai_operations_impact"
             },
             {
-                text: "How integrated are your CX systems with other tools?",
-                options: ["Fully integrated", "Partially integrated", "Not integrated", "Other (please specify)"],
-                key: "ip_cx_integration"
+                text: "Which AI-driven products are you interested in? (Select all that apply, then type 'Done')",
+                options: ["Virtual Agents (bots)", "Virtual Assistants for agents", "AI Post-Interaction Analytics", "Done"],
+                key: "ai_products_interest",
+                multiSelect: true
+            },
+            // Marketing & Sales
+            {
+                text: "What Customer Relationship Management (CRM) systems are in place?",
+                options: ["Salesforce", "HubSpot", "Microsoft Dynamics", "None", "Other (please specify)"],
+                key: "crm_systems"
             },
             {
-                text: "What’s the top barrier to CX process automation?",
-                options: ["Cost", "Complexity", "Resistance to change", "Other (please specify)"],
-                key: "ip_cx_automation_barrier"
+                text: "What Business Intelligence (BI) tools are in place or being implemented?",
+                options: ["Tableau", "Power BI", "Looker", "None", "Other (please specify)"],
+                key: "bi_tools"
             },
-            // Marketing & Sales (B2B, B2C, CXAI-inspired)
+            // Data Analytics
             {
-                text: "Do you use AI for customer sentiment analysis?",
-                options: ["Yes, extensively", "Yes, limited", "No, exploring", "No, not interested", "Other (please specify)"],
-                key: "ms_cx_sentiment_ai"
-            },
-            {
-                text: "How do you leverage CX data for sales?",
-                options: ["Upsell opportunities", "Customer retention", "Lead scoring", "Not leveraged", "Other (please specify)"],
-                key: "ms_cx_data_usage"
+                text: "What speech analytics platforms are in place?",
+                options: ["NICE", "Verint", "CallMiner", "None", "Other (please specify)"],
+                key: "speech_analytics"
             },
             {
-                text: "What’s the top CX-related marketing challenge?",
-                options: ["Personalization", "Data accuracy", "Campaign timing", "Other (please specify)"],
-                key: "ms_cx_marketing_challenge"
+                text: "What corporate data lakes are in place or being implemented?",
+                options: ["Snowflake", "Databricks", "AWS Redshift", "None", "Other (please specify)"],
+                key: "data_lakes"
             },
-            // Data Analytics (B2B, B2C, Internal, CXAI-inspired)
+            // Administrative
             {
-                text: "How do you analyze CX data today?",
-                options: ["Real-time dashboards", "Periodic reports", "Manual analysis", "No analysis", "Other (please specify)"],
-                key: "da_cx_data_analysis"
-            },
-            {
-                text: "What’s the top CX analytics goal?",
-                options: ["Improve satisfaction", "Reduce churn", "Optimize operations", "Other (please specify)"],
-                key: "da_cx_analytics_goal"
+                text: "What’s your first name?",
+                options: [],
+                key: "admin_first_name"
             },
             {
-                text: "Do you use predictive AI for CX insights?",
-                options: ["Yes, extensively", "Yes, limited", "No, exploring", "No, not interested", "Other (please specify)"],
-                key: "da_cx_predictive_ai"
+                text: "What’s your last name?",
+                options: [],
+                key: "admin_last_name"
+            },
+            {
+                text: "What’s your title?",
+                options: [],
+                key: "admin_title"
+            },
+            {
+                text: "What’s your email?",
+                options: [],
+                key: "admin_email"
+            },
+            {
+                text: "What’s your phone number? (Format: (123) 456-7890)",
+                options: [],
+                key: "admin_phone"
+            },
+            {
+                text: "What’s your company name?",
+                options: [],
+                key: "admin_company"
+            },
+            {
+                text: "How many employees does your company have?",
+                options: [],
+                key: "admin_employees"
+            },
+            {
+                text: "What’s your company’s annual revenue?",
+                options: [],
+                key: "admin_revenue"
+            },
+            {
+                text: "What’s your company’s industry?",
+                options: [],
+                key: "admin_industry"
+            },
+            {
+                text: "What’s your HQ city and postal code?",
+                options: [],
+                key: "admin_hq_location"
+            },
+            {
+                text: "What’s your HQ country?",
+                options: ["USA", "Canada", "UK", "Other"],
+                key: "admin_country"
             }
         ];
 
         let currentQuestionIndex = 0;
         const responses = {};
+        let multiSelectResponses = [];
         const userEmail = prompt("Please enter your email to start the questionnaire (for follow-up):");
 
         const chatContainer = document.getElementById('chat-container');
@@ -261,7 +320,17 @@
         }
 
         function handleOptionClick(option) {
-            if (option === "Other (please specify)") {
+            const currentQuestion = questions[currentQuestionIndex];
+            if (currentQuestion.multiSelect && option !== 'Done') {
+                multiSelectResponses.push(option);
+                displayMessage(option, 'user-message');
+                displayMessage("Select another option or type 'Done' to proceed.", 'bot-message');
+            } else if (currentQuestion.multiSelect && option === 'Done') {
+                saveResponse(multiSelectResponses.join(', '));
+                displayMessage('Done', 'user-message');
+                multiSelectResponses = [];
+                moveToNextQuestion();
+            } else if (option === "Other (please specify)") {
                 chatInput.style.display = 'block';
                 chatInput.focus();
             } else {
@@ -309,7 +378,8 @@
             if (currentQuestionIndex < questions.length) {
                 displayMessage(questions[currentQuestionIndex].text, 'bot-message');
                 displayOptions(questions[currentQuestionIndex].options);
-                chatInput.style.display = 'none';
+                chatInput.style.display = questions[currentQuestionIndex].options.length === 0 ? 'block' : 'none';
+                if (questions[currentQuestionIndex].options.length === 0) chatInput.focus();
             } else {
                 displayMessage("Thank you for completing the questionnaire! We'll follow up with tailored AI recommendations.", 'bot-message');
                 optionsContainer.innerHTML = '';
@@ -321,10 +391,17 @@
         chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && chatInput.value.trim()) {
                 const response = chatInput.value.trim();
-                displayMessage(response, 'user-message');
-                saveResponse(response);
+                if (questions[currentQuestionIndex].multiSelect && response.toLowerCase() === 'done') {
+                    saveResponse(multiSelectResponses.join(', '));
+                    displayMessage('Done', 'user-message');
+                    multiSelectResponses = [];
+                    moveToNextQuestion();
+                } else {
+                    saveResponse(response);
+                    displayMessage(response, 'user-message');
+                    moveToNextQuestion();
+                }
                 chatInput.value = '';
-                moveToNextQuestion();
             }
         });
 
@@ -340,7 +417,7 @@
 
         function startChat() {
             if (userEmail) {
-                displayMessage("Welcome to Continuant’s AI Discovery Agent! Let’s assess your AI readiness for customer experience and beyond. " + questions[0].text, 'bot-message');
+                displayMessage("Welcome to Continuant’s AI Discovery Agent! Let’s explore your CX AI needs. " + questions[0].text, 'bot-message');
                 displayOptions(questions[0].options);
             } else {
                 displayMessage("Please provide a valid email to continue.", 'bot-message');
