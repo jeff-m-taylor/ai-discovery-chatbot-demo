@@ -11,12 +11,16 @@
             background-color: #f3f4f6;
             margin: 0;
             padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         #chat-container {
-            position: fixed;
-            top: 100px;
+            position: absolute;
+            top: calc(18px + 1.5em + 16px);
             left: 50%;
-            transform: translateX(-30%);
+            transform: translateX(-50%);
             width: 320px;
             height: 400px;
             background: white;
@@ -36,7 +40,7 @@
             text-align: center;
         }
         #chat-output {
-            height: 240px;
+            height: 280px;
             overflow-y: auto;
             border: 1px solid #e5e7eb;
             padding: 6px;
@@ -83,15 +87,6 @@
         .option-button:hover {
             background-color: #2563eb;
         }
-        .admin-note {
-            background-color: #fefcbf;
-            padding: 6px;
-            margin: 6px;
-            border-radius: 4px;
-            font-size: 11px;
-            overflow-y: auto;
-            max-height: 80px;
-        }
         #toggle-chat {
             position: fixed;
             bottom: 20px;
@@ -116,26 +111,23 @@
             #chat-container {
                 width: 90%;
                 height: 350px;
-                top: 100px;
+                top: calc(18px + 1.5em + 16px);
                 left: 50%;
-                transform: translateX(-30%);
+                transform: translateX(-50%);
             }
             #chat-output {
-                height: 200px;
+                height: 230px;
             }
         }
     </style>
 </head>
 <body>
     <div id="sample-content">
-        <h1 class="text-lg font-bold text-center mb-4">Continuant AI Discovery</h1>
+        <h1 class="text-lg font-bold text-center mb-4">Continuant AI Agent</h1>
     </div>
 
-   <div id="chat-container">
+    <div id="chat-container">
         <div id="chat-header">Continuant AI Discovery Agent</div>
-        <div class="admin-note">
-            <p><strong>Note for HubSpot Admins:</strong> Responses are logged to the console (F12 > Console). For live integration, replace <code>YOUR_PORTAL_ID</code> and <code>YOUR_FORM_GUID</code> with HubSpot credentials and create a form with matching fields.</p>
-        </div> 
         <div id="chat-output"></div>
         <input id="chat-input" type="text" placeholder="Type your response...">
         <div id="options-container"></div>
@@ -201,7 +193,7 @@
             {
                 text: "How do you anticipate AI changing your operations after one year?",
                 options: ["Reduced costs", "Improved efficiency", "Enhanced customer loyalty", "Other (please specify)"],
-                key: "ai_operations_impact" 
+                key: "ai_operations_impact"
             },
             {
                 text: "Which AI-driven products are you interested in? (Select all that apply, then type 'Done')",
