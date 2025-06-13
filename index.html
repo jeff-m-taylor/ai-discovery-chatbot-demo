@@ -9,78 +9,136 @@
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f3f4f6;
+            margin: 0;
+            padding: 20px;
         }
         #chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 400px;
+            height: 500px;
             background: white;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-            padding: 20px;
-            margin: 20px auto;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+        }
+        #chat-header {
+            background-color: #3b82f6;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
         }
         #chat-output {
-            height: 400px;
+            height: 300px;
             overflow-y: auto;
             border: 1px solid #e5e7eb;
-            padding: 10px;
+            padding: 8px;
+            margin: 8px;
             border-radius: 4px;
-            margin-bottom: 10px;
+            font-size: 14px;
         }
         .message {
-            margin: 10px 0;
-            padding: 10px;
+            margin: 6px 0;
+            padding: 6px;
             border-radius: 4px;
+            font-size: 14px;
         }
         .bot-message {
             background-color: #e5e7eb;
         }
-        .user •
         .user-message {
             background-color: #3b82f6;
             color: white;
             text-align: right;
         }
         #chat-input {
-            width: 100%;
-            padding: 10px;
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin: 8px;
             border: 1px solid #e5e7eb;
             border-radius: 4px;
+            font-size: 14px;
         }
         #options-container {
-            margin-top: 10px;
+            margin: 8px;
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 6px;
         }
         .option-button {
             background-color: #3b82f6;
             color: white;
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 12px;
         }
         .option-button:hover {
             background-color: #2563eb;
         }
         .admin-note {
             background-color: #fefcbf;
-            padding: 10px;
+            padding: 8px;
+            margin: 8px;
             border-radius: 4px;
-            margin-bottom: 10px;
+            font-size: 12px;
+            overflow-y: auto;
+            max-height: 100px;
+        }
+        #toggle-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #3b82f6;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+        }
+        #toggle-chat:hover {
+            background-color: #2563eb;
+        }
+        @media (max-width: 480px) {
+            #chat-container {
+                width: 90%;
+                height: 400px;
+                right: 5%;
+            }
+            #chat-output {
+                height: 200px;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="chat-container" class="p-4">
-        <h1 class="text-2xl font-bold text-center mb-4">Continuant AI Discovery Chatbot Demo</h1>
+    <div id="sample-content">
+        <h1 class="text-3xl font-bold text-center mb-4">Sample Web Page</h1>
+        <p class="text-lg text-center">This is a sample page to demonstrate the AI Discovery Chatbot widget. Click the chat icon in the bottom-right corner to interact with the chatbot.</p>
+    </div>
+
+    <div id="chat-container">
+        <div id="chat-header">Continuant AI Discovery Chatbot</div>
         <div class="admin-note">
-            <p><strong>Note for HubSpot Admins:</strong> This demo shows the AI Discovery Chatbot. Responses are logged to the browser console (open Developer Tools with F12). For live integration, replace <code>YOUR_PORTAL_ID</code> and <code>YOUR_FORM_GUID</code> with HubSpot credentials and create a form with matching fields. Contact me to discuss adding this to our HubSpot website.</p>
+            <p><strong>Note for HubSpot Admins:</strong> Responses are logged to the console (F12 > Console). For live integration, replace <code>YOUR_PORTAL_ID</code> and <code>YOUR_FORM_GUID</code> with HubSpot credentials and create a form with matching fields.</p>
         </div>
         <div id="chat-output"></div>
-        <input id="chat-input" type="text" placeholder="Type your response..." class="mb-2">
+        <input id="chat-input" type="text" placeholder="Type your response...">
         <div id="options-container"></div>
     </div>
+
+    <div id="toggle-chat" title="Toggle Chatbot">💬</div>
 
     <script>
         // Placeholder HubSpot Forms API configuration
@@ -139,9 +197,11 @@
         const responses = {};
         const userEmail = prompt("Please enter your email to start the questionnaire (for follow-up):");
 
+        const chatContainer = document.getElementById('chat-container');
         const chatOutput = document.getElementById('chat-output');
         const chatInput = document.getElementById('chat-input');
         const optionsContainer = document.getElementById('options-container');
+        const toggleChat = document.getElementById('toggle-chat');
 
         function displayMessage(message, type) {
             const div = document.createElement('div');
@@ -190,9 +250,8 @@
                     pageName: document.title
                 }
             };
-            // For demo, log to console instead of live API call
             console.log('Simulated HubSpot submission:', formData);
-            // Uncomment below for live integration after adding valid credentials
+            // Uncomment for live integration
             /*
             fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${HUBSPOT_PORTAL_ID}/${HUBSPOT_FORM_GUID}`, {
                 method: 'POST',
@@ -228,6 +287,16 @@
                 saveResponse(response);
                 chatInput.value = '';
                 moveToNextQuestion();
+            }
+        });
+
+        toggleChat.addEventListener('click', () => {
+            if (chatContainer.style.display === 'none') {
+                chatContainer.style.display = 'flex';
+                toggleChat.textContent = '✖';
+            } else {
+                chatContainer.style.display = 'none';
+                toggleChat.textContent = '💬';
             }
         });
 
